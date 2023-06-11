@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DayView">
+        <attr name="hour_height" format="dimension" />
+        <attr name="separator_color" format="color" />
+        <attr name="hour_color" format="color" />
+        <attr name="hour_size" format="dimension" />
+        <attr name="hour_padding" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="EditableDayView">
+        <attr name="dragging_drawable" format="reference" />
+    </declare-styleable>
+</resources>
