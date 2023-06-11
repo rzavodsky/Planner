@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import rzavodsky.planner.views.EditableDayView
 import kotlin.random.Random
 
 class PlanBlockAdapter: EditableDayView.Adapter {
@@ -47,6 +48,6 @@ class PlanBlockAdapter: EditableDayView.Adapter {
             seed = seed * 31L + c.code
         }
         val rand = Random(seed)
-        return Color.HSVToColor(floatArrayOf(rand.nextFloat() * 360, 1f, 1f))
+        return Color.HSVToColor(floatArrayOf(rand.nextFloat() * 360, 0.6f, 1f))
     }
 }

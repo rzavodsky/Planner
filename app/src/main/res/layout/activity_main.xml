@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <rzavodsky.planner.EditableDayView
+        <rzavodsky.planner.views.EditableDayView
             android:id="@+id/day_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

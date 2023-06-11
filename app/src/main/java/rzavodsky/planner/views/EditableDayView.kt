@@ -1,4 +1,4 @@
-package rzavodsky.planner
+package rzavodsky.planner.views
 
 import android.content.ClipData
 import android.content.ClipDescription
@@ -14,6 +14,8 @@ import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
+import rzavodsky.planner.R
+import rzavodsky.planner.dpToPx
 import kotlin.math.max
 
 class EditableDayView: DayView {
