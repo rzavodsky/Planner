@@ -18,11 +18,11 @@ import rzavodsky.planner.R
 import rzavodsky.planner.dpToPx
 import kotlin.math.max
 
-class EditableDayView: DayView {
+class EditableDayView<T: DayView.ViewHolder>: DayView<T> {
     private var drawable: GradientDrawable? = null
 
     private var dragging: Dragging? = null
-    var editableAdapter: Adapter? = null
+    var editableAdapter: Adapter<T>? = null
         set(value) {
             field = value
             adapter = value
@@ -87,28 +87,29 @@ class EditableDayView: DayView {
             val duration = adapter!!.getDurationAt(i)
             val top = hour * hourHeight
             val bottom = top + duration * hourHeight
-            val bg = getChildAt(i).background as GradientDrawable
 
-            drawable!!.setStroke(3.dpToPx.toInt(), bg.colors!![0])
+            drawable!!.setStroke(3.dpToPx.toInt(), editableAdapter!!.getColor(i))
             drawable!!.setBounds(sideSize.toInt(), top.toInt(), width, bottom.toInt())
             drawable!!.draw(canvas!!)
         }
     }
 
-    override fun createChild(i: Int): View {
-        val view = super.createChild(i)
-        val gd = GestureDetector(context, LongClickGestureDetector(view, i, adapter!!.getHourAt(i)))
-        view.setOnTouchListener {_, event ->
+    override fun createChild(i: Int): T {
+        val viewHolder = super.createChild(i)
+        val gd = GestureDetector(context, LongClickGestureDetector(viewHolder.view, i, editableAdapter!!))
+        viewHolder.view.setOnTouchListener {v, event ->
             gd.onTouchEvent(event)
-            view.performClick()
+            v.performClick()
             true
         }
-        return view
+        return viewHolder
     }
 
-    interface Adapter : DayView.Adapter {
-        fun changeHourAt(pos: Int, hour: Int)
-        fun changeDurationAt(pos: Int, duration: Int)
+    abstract class Adapter<T: ViewHolder> : DayView.Adapter<T>() {
+        abstract fun changeHourAt(pos: Int, hour: Int)
+        abstract fun changeDurationAt(pos: Int, duration: Int)
+        abstract fun onClick(pos: Int)
+        abstract fun getColor(pos: Int): Int
     }
 
     private class Dragging(val pos: Int, var hour: Int, val move: Boolean)
@@ -124,7 +125,7 @@ class EditableDayView: DayView {
         }
     }
 
-    private class LongClickGestureDetector(private val view: View, private val pos: Int, private val hour: Int): GestureDetector.SimpleOnGestureListener() {
+    private class LongClickGestureDetector<T: ViewHolder>(private val view: View, private val pos: Int, private val adapter: Adapter<T>): GestureDetector.SimpleOnGestureListener() {
         override fun onLongPress(e: MotionEvent) {
             Log.d("DayView", "Moving item $pos")
             view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
@@ -136,11 +137,12 @@ class EditableDayView: DayView {
             )
             view.startDragAndDrop(dragData,
                 EmptyShadowBuilder(),
-                Dragging(pos, hour, e.y < (view.height / 2)), 0)
+                Dragging(pos, adapter.getHourAt(pos), e.y < (view.height / 2)), 0)
         }
 
         override fun onSingleTapUp(e: MotionEvent): Boolean {
             Log.d("DayView", "Opening $pos")
+            adapter.onClick(pos)
             return true
         }
     }

@@ -14,7 +14,7 @@ import rzavodsky.planner.dpToPx
 import kotlin.math.max
 
 
-open class DayView: ViewGroup {
+open class DayView<T: DayView.ViewHolder>: ViewGroup {
     protected var hourHeight = 75.dpToPx
     private var hourPadding = 5.dpToPx
     private var sidePaint = Paint().apply {
@@ -33,9 +33,11 @@ open class DayView: ViewGroup {
     private var textHeight = 0
 
 
-    open var adapter: Adapter? = null
+    private val viewHolders = mutableListOf<T>()
+    open var adapter: Adapter<T>? = null
         set(value) {
             field = value
+            value?.changeNotifier = ::dataSetChanged
             dataSetChanged()
         }
 
@@ -72,7 +74,7 @@ open class DayView: ViewGroup {
     }
 
 
-    fun dataSetChanged() {
+    private fun dataSetChanged() {
         if (adapter == null) {
             removeAllViews()
             return
@@ -80,23 +82,26 @@ open class DayView: ViewGroup {
 
         val targetChildCount = adapter!!.getItemCount()
 
-        if (childCount > targetChildCount) {
-            for (i in targetChildCount until childCount) {
-                removeViewAt(i)
+        if (viewHolders.size > targetChildCount) {
+            for (i in targetChildCount until viewHolders.size) {
+                removeView(viewHolders[i].view)
+                viewHolders.removeAt(i)
             }
-        } else if (childCount < targetChildCount) {
-            for (i in childCount until targetChildCount) {
-                addView(createChild(i))
+        } else if (viewHolders.size < targetChildCount) {
+            for (i in viewHolders.size until targetChildCount) {
+                val viewHolder = createChild(i)
+                addView(viewHolder.view)
+                viewHolders.add(viewHolder)
             }
         }
 
-        for (i in 0 until childCount) {
-            adapter!!.initializeAt(i, getChildAt(i))
+        for (i in 0 until viewHolders.size) {
+            adapter!!.bindViewHolder(i, viewHolders[i])
         }
     }
 
-    protected open fun createChild(i: Int): View {
-        return adapter!!.createView(this)
+    protected open fun createChild(i: Int): T {
+        return adapter!!.createViewHolder(this)
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -111,30 +116,36 @@ open class DayView: ViewGroup {
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         if (adapter == null) return
 
-        for (i in 0 until childCount) {
+        for (i in 0 until viewHolders.size) {
             layoutChild(i, adapter!!.getHourAt(i), adapter!!.getDurationAt(i))
         }
     }
 
     protected fun layoutChild(pos: Int, hour: Int, duration: Int) {
-        val child = getChildAt(pos)
+        val child = viewHolders[pos].view
         val top =  hour * hourHeight
         val bot = top + duration * hourHeight
         child.layout(left + sideSize.toInt(), top.toInt(), right, bot.toInt())
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        for (i in 0 until childCount) {
-            measureChild(getChildAt(i), widthMeasureSpec, heightMeasureSpec)
+        for (i in 0 until viewHolders.size) {
+            measureChild(viewHolders[i].view, widthMeasureSpec, heightMeasureSpec)
         }
         setMeasuredDimension(widthMeasureSpec, (hourHeight * 24).toInt())
     }
 
-    interface Adapter {
-        fun getItemCount(): Int
-        fun getHourAt(pos: Int): Int
-        fun getDurationAt(pos: Int): Int
-        fun initializeAt(pos: Int, view: View)
-        fun createView(parent: ViewGroup): View
+    open class ViewHolder(val view: View)
+
+    abstract class Adapter<T: ViewHolder> {
+        var changeNotifier: (() -> Unit)? = null
+        abstract fun getItemCount(): Int
+        abstract fun getHourAt(pos: Int): Int
+        abstract fun getDurationAt(pos: Int): Int
+        abstract fun bindViewHolder(pos: Int, view: T)
+        abstract fun createViewHolder(parent: ViewGroup): T
+        fun notifyDatasetChanged() {
+            changeNotifier?.invoke()
+        }
     }
 }
