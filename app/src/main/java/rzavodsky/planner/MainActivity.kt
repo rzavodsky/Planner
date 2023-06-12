@@ -2,16 +2,28 @@ package rzavodsky.planner
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
+import rzavodsky.planner.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val dayView = findViewById<EditableDayView>(R.id.day_view)
-        val adapter = PlanBlockAdapter()
-        adapter.data.add(PlanBlock(1, 2, "Test"))
-        adapter.data.add(PlanBlock(4, 2, "Test2"))
-        dayView.editableAdapter = adapter
+        setSupportActionBar(binding.toolbar)
+
+        val navController = binding.navHostFragment.getFragment<NavHostFragment>().navController
+        NavigationUI.setupActionBarWithNavController(this, navController, binding.drawerLayout)
+        NavigationUI.setupWithNavController(binding.navDrawer, navController)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = this.findNavController(R.id.nav_host_fragment)
+        return NavigationUI.navigateUp(navController, binding.drawerLayout)
     }
 }

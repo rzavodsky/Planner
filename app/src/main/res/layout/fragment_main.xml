@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragments.MainFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <rzavodsky.planner.views.EditableDayView
+        android:id="@+id/day_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:dragging_drawable="@drawable/plan_block_background"
+        app:hour_color="?android:attr/colorForeground"
+        app:hour_height="50dp"
+        app:hour_padding="20dp"
+        app:hour_size="15dp"
+        app:separator_color="?attr/colorButtonNormal" />
+</ScrollView>
