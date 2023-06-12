@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Planner</string>
+    <string name="preferences">Settings</string>
 </resources>
