@@ -9,11 +9,13 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
 import rzavodsky.planner.PlanAddModel
-import rzavodsky.planner.TaskAdapter
+import rzavodsky.planner.Preferences
+import rzavodsky.planner.adapters.TaskAdapter
 import rzavodsky.planner.TaskModel
 import rzavodsky.planner.Tasks
 import rzavodsky.planner.database.PlanBlock
@@ -106,10 +108,14 @@ class PlanAddFragment : Fragment() {
     }
 
     private fun confirm() {
+        val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val duration = pref.getInt(Preferences.defaultDuration, 1)
+        val startHour = pref.getInt(Preferences.startHour, 0)
         lifecycleScope.launch {
             val dao = PlanBlockDatabase.getInstance(requireContext()).planBlockDao
             for (task in viewModel.selectedTasks) {
-                dao.insert(PlanBlock(task.index.value!! - 1, 1, LocalDate.now(),
+                val nextStart = dao.getLastBlockForDay(LocalDate.now())?.let { it.hour + it.duration } ?: startHour
+                dao.insert(PlanBlock(nextStart, duration, LocalDate.now(),
                     !task.isTempTask, task.orgTask?.id, task.name))
             }
             findNavController().navigateUp()

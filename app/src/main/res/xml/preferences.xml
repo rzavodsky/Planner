@@ -5,4 +5,23 @@
         app:key="org_file"
         app:title="Change org file"
         app:summary="Set the org file, which will be used to read tasks" />
+
+    <com.h6ah4i.android.preference.NumberPickerPreferenceCompat
+        app:key="start_hour"
+        app:summary="Default hour of first plan of day"
+        app:title="Initial hour"
+        app:nppc_maxValue="23"
+        app:nppc_minValue="0"
+        app:nppc_unitText=":00"
+        app:nppc_wrapSelectorWheel="false"
+        />
+    <com.h6ah4i.android.preference.NumberPickerPreferenceCompat
+        app:key="default_duration"
+        app:summary="Default duration of created plans"
+        app:title="Default duration"
+        app:nppc_maxValue="24"
+        app:nppc_minValue="1"
+        app:nppc_unitText=":00"
+        app:nppc_wrapSelectorWheel="false"
+        />
 </PreferenceScreen>

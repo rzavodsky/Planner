@@ -8,10 +8,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
+import com.h6ah4i.android.preference.NumberPickerPreferenceCompat
+import com.h6ah4i.android.preference.NumberPickerPreferenceDialogFragmentCompat
 import rzavodsky.planner.Preferences
 import rzavodsky.planner.R
 import rzavodsky.planner.Tasks
 
+const val DIALOG_FRAGMENT_TAG = "androidx.preference.PreferenceFragment.DIALOG"
 class PreferencesFragment: PreferenceFragmentCompat() {
         private val orgFileIntentLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -53,5 +56,19 @@ class PreferencesFragment: PreferenceFragmentCompat() {
             }?.let {
                 findPreference<Preference>(Preferences.orgFile)?.summary = "Currently set to $it"
             }
+    }
+
+    override fun onDisplayPreferenceDialog(preference: Preference) {
+        if (parentFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) {
+            return
+        }
+
+        if (preference is NumberPickerPreferenceCompat) {
+            val f = NumberPickerPreferenceDialogFragmentCompat.newInstance(preference.key)
+            f.setTargetFragment(this, 0)
+            f.show(parentFragmentManager, DIALOG_FRAGMENT_TAG)
+        } else {
+            super.onDisplayPreferenceDialog(preference)
+        }
     }
 }
