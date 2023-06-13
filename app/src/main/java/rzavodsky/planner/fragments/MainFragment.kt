@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
-import rzavodsky.planner.PlanBlockAdapter
+import rzavodsky.planner.EditablePlanBlockAdapter
+import rzavodsky.planner.R
+import rzavodsky.planner.Tasks
 import rzavodsky.planner.database.PlanBlockDatabase
 import rzavodsky.planner.databinding.FragmentMainBinding
 import java.time.LocalDate
@@ -22,19 +25,28 @@ class MainFragment : Fragment() {
 
         val dataSource = PlanBlockDatabase.getInstance(requireContext()).planBlockDao
 
-        val adapter = PlanBlockAdapter()
+        val adapter = EditablePlanBlockAdapter()
         adapter.onBlockUpdate = {
             lifecycleScope.launch {
                 dataSource.update(it)
             }
         }
 
+        adapter.onBlockClick = { block ->
+            val action = MainFragmentDirections.actionMainFragmentToPlanDetailFragment(block.id)
+            findNavController().navigate(action)
+        }
+
         // Automatically update PlanBlockAdapter using db data
-        dataSource.getAllPlansForDay(LocalDate.now())
-            .observe(viewLifecycleOwner) {
+        dataSource.getAllPlansForDay(LocalDate.now()).observe(viewLifecycleOwner) {
             adapter.data = it ?: listOf()
         }
+
+        Tasks.getInstance().tasks.observe(viewLifecycleOwner) {
+            adapter.notifyDatasetChanged()
+        }
         binding.dayView.editableAdapter = adapter
+        binding.dayView.adapter = adapter
 
         return binding.root
     }

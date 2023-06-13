@@ -8,9 +8,39 @@
         android:id="@+id/mainFragment"
         android:name="rzavodsky.planner.fragments.MainFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_main"/>
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_planAddFragment"
+            app:destination="@id/planAddFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_planDetailFragment"
+            app:destination="@id/planDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/preferencesFragment"
         android:name="rzavodsky.planner.fragments.PreferencesFragment"
         android:label="@string/preferences" />
+    <fragment
+        android:id="@+id/planAddFragment"
+        android:name="rzavodsky.planner.fragments.PlanAddFragment"
+        android:label="@string/add_plan"
+        tools:layout="@layout/fragment_plan_add" />
+    <fragment
+        android:id="@+id/planDetailFragment"
+        android:name="rzavodsky.planner.fragments.PlanDetailFragment"
+        android:label="@string/plan_detail"
+        tools:layout="@layout/fragment_plan_detail" >
+        <argument
+            android:name="planId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/planHistoryFragment"
+        android:name="rzavodsky.planner.fragments.PlanHistoryFragment"
+        android:label="@string/history"
+        tools:layout="@layout/fragment_plan_history" >
+        <action
+            android:id="@+id/action_planHistoryFragment_to_planDetailFragment"
+            app:destination="@id/planDetailFragment" />
+    </fragment>
 </navigation>
