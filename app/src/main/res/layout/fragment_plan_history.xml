@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.PlanHistoryFragment">
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/backward_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/backward_button"
+        tools:text="13.6.2020" />
+
+    <View
+        android:id="@+id/space"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:background="?attr/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backward_button" />
+
+    <ImageButton
+        android:id="@+id/backward_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Backward"
+        android:src="@android:drawable/ic_media_rew"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/forward_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Forward"
+        android:src="@android:drawable/ic_media_ff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/space">
+
+        <rzavodsky.planner.views.DayView
+            android:id="@+id/dayView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hour_color="?android:attr/colorForeground"
+            app:hour_height="50dp"
+            app:hour_padding="20dp"
+            app:hour_size="15dp"
+            app:separator_color="?attr/colorButtonNormal">
+
+        </rzavodsky.planner.views.DayView>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
