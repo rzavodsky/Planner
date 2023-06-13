@@ -1,4 +1,4 @@
-package rzavodsky.planner
+package rzavodsky.planner.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

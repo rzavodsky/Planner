@@ -1,4 +1,4 @@
-package rzavodsky.planner
+package rzavodsky.planner.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
+import rzavodsky.planner.TaskModel
 import rzavodsky.planner.databinding.TaskItemBinding
 
 class TaskViewHolder(val binding: TaskItemBinding): RecyclerView.ViewHolder(binding.root)
@@ -14,7 +15,7 @@ class TaskAdapter(private val lifecycleOwner: LifecycleOwner): RecyclerView.Adap
     var data = listOf<TaskModel>()
         @SuppressLint("NotifyDataSetChanged")
         set(value) {
-            field = value
+            field = value.sortedBy { it.orgTask?.getPriority() ?: Long.MAX_VALUE }
             notifyDataSetChanged()
         }
 

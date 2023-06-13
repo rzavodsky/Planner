@@ -1,4 +1,4 @@
-package rzavodsky.planner
+package rzavodsky.planner.adapters
 
 import rzavodsky.planner.database.PlanBlock
 import rzavodsky.planner.views.EditableDayView

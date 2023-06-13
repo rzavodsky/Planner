@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
-import rzavodsky.planner.EditablePlanBlockAdapter
+import rzavodsky.planner.adapters.EditablePlanBlockAdapter
 import rzavodsky.planner.R
 import rzavodsky.planner.Tasks
 import rzavodsky.planner.database.PlanBlockDatabase

@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
-import rzavodsky.planner.PlanBlockAdapter
+import rzavodsky.planner.adapters.PlanBlockAdapter
 import rzavodsky.planner.database.PlanBlock
 import rzavodsky.planner.database.PlanBlockDao
 import rzavodsky.planner.database.PlanBlockDatabase
