@@ -48,6 +48,9 @@ class MainFragment : Fragment() {
         binding.dayView.editableAdapter = adapter
         binding.dayView.adapter = adapter
 
+        binding.planAddButton.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_planAddFragment)
+        }
         return binding.root
     }
 
