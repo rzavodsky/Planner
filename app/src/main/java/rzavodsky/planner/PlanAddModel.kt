@@ -13,4 +13,13 @@ class TaskModel(val isTempTask: Boolean, index: Int?): ViewModel() {
     var orgTask: OrgTask? = null
     var name: String? = null
     var onClick: (() -> Unit)? = null
+
+    fun getSummary(): String {
+        if (isTempTask) return ""
+
+        if (orgTask!!.priority != null) return "Priority: ${orgTask!!.priority}"
+        if (orgTask!!.deadline != null) return "Deadline: ${orgTask!!.deadline}"
+        if (orgTask!!.scheduled != null) return "Scheduled: ${orgTask!!.scheduled}"
+        return ""
+    }
 }
