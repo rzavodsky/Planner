@@ -2,6 +2,7 @@ package rzavodsky.planner.fragments
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.Preference
@@ -30,13 +31,27 @@ class PreferencesFragment: PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
-        findPreference<Preference>("org_file")?.setOnPreferenceClickListener {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                addCategory(Intent.CATEGORY_OPENABLE)
-                type = "*/*"
+        findPreference<Preference>(Preferences.orgFile)?.apply {
+            setOnPreferenceClickListener {
+                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                    addCategory(Intent.CATEGORY_OPENABLE)
+                    type = "*/*"
+                }
+                orgFileIntentLauncher.launch(intent)
+                true
             }
-            orgFileIntentLauncher.launch(intent)
-            true
         }
+        setOrgFileSummary()
+    }
+
+    private fun setOrgFileSummary() {
+        PreferenceManager
+            .getDefaultSharedPreferences(requireContext())
+            .getString(Preferences.orgFile, null)
+            ?.let {
+                Uri.parse(it).lastPathSegment?.split("/")?.last()
+            }?.let {
+                findPreference<Preference>(Preferences.orgFile)?.summary = "Currently set to $it"
+            }
     }
 }
