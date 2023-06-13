@@ -17,4 +17,7 @@ interface PlanBlockDao {
 
     @Query("SELECT * FROM plan_blocks WHERE date = :date")
     fun getAllPlansForDay(date: LocalDate): LiveData<List<PlanBlock>>
+
+    @Query("SELECT * FROM plan_blocks WHERE id = :id")
+    suspend fun getPlan(id: Long): PlanBlock
 }
