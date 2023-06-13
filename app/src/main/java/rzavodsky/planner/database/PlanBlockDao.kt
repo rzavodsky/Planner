@@ -2,6 +2,7 @@ package rzavodsky.planner.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
@@ -14,6 +15,9 @@ interface PlanBlockDao {
 
     @Update
     suspend fun update(block: PlanBlock)
+
+    @Delete
+    suspend fun delete(block: PlanBlock)
 
     @Query("SELECT * FROM plan_blocks WHERE date = :date")
     fun getAllPlansForDay(date: LocalDate): LiveData<List<PlanBlock>>
