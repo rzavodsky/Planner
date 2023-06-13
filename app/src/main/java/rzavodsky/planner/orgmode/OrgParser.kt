@@ -40,14 +40,14 @@ class OrgParser(stream: InputStream) {
             tags = match.groups[3]?.value?.split(":")
         }
 
-        Log.i("OrgParser", "Parsed ${task.title}")
+        Log.d("OrgParser", "Parsed ${task.title}")
 
         currentLine = reader.readLine()
 
         tryParsePlanning(task)
         tryParsePropertyDrawer(task)
         tryParseDescription(task)
-        if (task.id == null) {
+        if (task._id == null) {
             Log.w("OrgParser", "Throwing out ${task.title}, no id")
             return null
         }
@@ -88,7 +88,7 @@ class OrgParser(stream: InputStream) {
 
             idPropertyRegex.matchEntire(currentLine!!)?.let { match ->
                 match.groups[1]?.let { group ->
-                    task.id = group.value
+                    task._id = group.value
                 }
             }
 

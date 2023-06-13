@@ -3,7 +3,9 @@ package rzavodsky.planner.orgmode
 import java.time.Instant
 
 class OrgTask {
-    var id: String? = null
+    var _id: String? = null
+    val id: String
+        get() = _id!!
     var title: String? = null
     var tags: List<String>? = null
     var priority: Char? = null
