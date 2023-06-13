@@ -9,6 +9,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import rzavodsky.planner.Preferences
 import rzavodsky.planner.R
+import rzavodsky.planner.Tasks
 
 class PreferencesFragment: PreferenceFragmentCompat() {
         private val orgFileIntentLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -22,6 +23,8 @@ class PreferencesFragment: PreferenceFragmentCompat() {
                 putString(Preferences.orgFile, file.toString())
                 apply()
             }
+            setOrgFileSummary()
+            Tasks.getInstance().update(requireContext())
         }
     }
 

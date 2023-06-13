@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Tasks.getInstance().update(applicationContext)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -20,6 +21,11 @@ class MainActivity : AppCompatActivity() {
         val navController = binding.navHostFragment.getFragment<NavHostFragment>().navController
         NavigationUI.setupActionBarWithNavController(this, navController, binding.drawerLayout)
         NavigationUI.setupWithNavController(binding.navDrawer, navController)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Tasks.teardown()
     }
 
     override fun onSupportNavigateUp(): Boolean {
