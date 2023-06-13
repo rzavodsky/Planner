@@ -83,13 +83,13 @@ open class DayView<T: DayView.ViewHolder>: ViewGroup {
         val targetChildCount = adapter!!.getItemCount()
 
         if (viewHolders.size > targetChildCount) {
-            for (i in targetChildCount until viewHolders.size) {
-                removeView(viewHolders[i].view)
-                viewHolders.removeAt(i)
+            while (viewHolders.size > targetChildCount) {
+                removeView(viewHolders.last().view)
+                viewHolders.removeLast()
             }
         } else if (viewHolders.size < targetChildCount) {
-            for (i in viewHolders.size until targetChildCount) {
-                val viewHolder = createChild(i)
+            while (viewHolders.size < targetChildCount) {
+                val viewHolder = createChild(viewHolders.size)
                 addView(viewHolder.view)
                 viewHolders.add(viewHolder)
             }
@@ -101,7 +101,11 @@ open class DayView<T: DayView.ViewHolder>: ViewGroup {
     }
 
     protected open fun createChild(i: Int): T {
-        return adapter!!.createViewHolder(this)
+        val viewHolder = adapter!!.createViewHolder(this)
+        viewHolder.view.setOnClickListener {
+            adapter?.onClick(i)
+        }
+        return viewHolder
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -144,6 +148,7 @@ open class DayView<T: DayView.ViewHolder>: ViewGroup {
         abstract fun getDurationAt(pos: Int): Int
         abstract fun bindViewHolder(pos: Int, view: T)
         abstract fun createViewHolder(parent: ViewGroup): T
+        abstract fun onClick(pos: Int)
         fun notifyDatasetChanged() {
             changeNotifier?.invoke()
         }

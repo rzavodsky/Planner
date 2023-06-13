@@ -5,12 +5,10 @@ import android.view.ViewGroup
 import rzavodsky.planner.database.PlanBlock
 import rzavodsky.planner.databinding.PlanBlockBinding
 import rzavodsky.planner.views.DayView
-import rzavodsky.planner.views.EditableDayView
 
 class PlanBlockViewHolder(val binding: PlanBlockBinding): DayView.ViewHolder(binding.root)
 
-class PlanBlockAdapter: EditableDayView.Adapter<PlanBlockViewHolder>() {
-    var onBlockUpdate: ((PlanBlock) -> Unit)? = null
+open class PlanBlockAdapter: DayView.Adapter<PlanBlockViewHolder>() {
     var onBlockClick: ((PlanBlock) -> Unit)? = null
     var data = listOf<PlanBlock>()
         set(value) {
@@ -25,18 +23,6 @@ class PlanBlockAdapter: EditableDayView.Adapter<PlanBlockViewHolder>() {
 
     override fun getDurationAt(pos: Int): Int = data[pos].duration
 
-    override fun changeHourAt(pos: Int, hour: Int) {
-        val block = data[pos]
-        block.hour = hour
-        onBlockUpdate?.invoke(block)
-    }
-
-    override fun changeDurationAt(pos: Int, duration: Int) {
-        val block = data[pos]
-        block.duration = duration
-        onBlockUpdate?.invoke(block)
-    }
-
     override fun bindViewHolder(pos: Int, view: PlanBlockViewHolder) {
         view.binding.planBlock = data[pos]
     }
@@ -49,6 +35,4 @@ class PlanBlockAdapter: EditableDayView.Adapter<PlanBlockViewHolder>() {
     override fun onClick(pos: Int) {
         onBlockClick?.invoke(data[pos])
     }
-
-    override fun getColor(pos: Int): Int = data[pos].getBackgroundColor()
 }

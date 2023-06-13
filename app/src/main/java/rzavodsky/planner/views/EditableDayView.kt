@@ -22,11 +22,7 @@ class EditableDayView<T: DayView.ViewHolder>: DayView<T> {
     private var drawable: GradientDrawable? = null
 
     private var dragging: Dragging? = null
-    var editableAdapter: Adapter<T>? = null
-        set(value) {
-            field = value
-            adapter = value
-        }
+    var editableAdapter: Adapter? = null
 
     constructor(context: Context): super(context)
 
@@ -96,7 +92,8 @@ class EditableDayView<T: DayView.ViewHolder>: DayView<T> {
 
     override fun createChild(i: Int): T {
         val viewHolder = super.createChild(i)
-        val gd = GestureDetector(context, LongClickGestureDetector(viewHolder.view, i, editableAdapter!!))
+        viewHolder.view.setOnClickListener(null)
+        val gd = GestureDetector(context, LongClickGestureDetector(viewHolder.view, i, adapter!!))
         viewHolder.view.setOnTouchListener {v, event ->
             gd.onTouchEvent(event)
             v.performClick()
@@ -105,11 +102,10 @@ class EditableDayView<T: DayView.ViewHolder>: DayView<T> {
         return viewHolder
     }
 
-    abstract class Adapter<T: ViewHolder> : DayView.Adapter<T>() {
-        abstract fun changeHourAt(pos: Int, hour: Int)
-        abstract fun changeDurationAt(pos: Int, duration: Int)
-        abstract fun onClick(pos: Int)
-        abstract fun getColor(pos: Int): Int
+    interface Adapter {
+        fun changeHourAt(pos: Int, hour: Int)
+        fun changeDurationAt(pos: Int, duration: Int)
+        fun getColor(pos: Int): Int
     }
 
     private class Dragging(val pos: Int, var hour: Int, val move: Boolean)
@@ -125,7 +121,11 @@ class EditableDayView<T: DayView.ViewHolder>: DayView<T> {
         }
     }
 
-    private class LongClickGestureDetector<T: ViewHolder>(private val view: View, private val pos: Int, private val adapter: Adapter<T>): GestureDetector.SimpleOnGestureListener() {
+    private class LongClickGestureDetector<T: ViewHolder>(
+        private val view: View,
+        private val pos: Int,
+        private val adapter: DayView.Adapter<T>,
+        ): GestureDetector.SimpleOnGestureListener() {
         override fun onLongPress(e: MotionEvent) {
             Log.d("DayView", "Moving item $pos")
             view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
