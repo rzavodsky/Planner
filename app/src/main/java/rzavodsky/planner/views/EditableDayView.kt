@@ -17,11 +17,13 @@ import androidx.core.content.res.ResourcesCompat
 import rzavodsky.planner.R
 import rzavodsky.planner.util.dpToPx
 import kotlin.math.max
+import kotlin.math.min
 
 class EditableDayView<T: DayView.ViewHolder>: DayView<T> {
     private var drawable: GradientDrawable? = null
 
     private var dragging: Dragging? = null
+    private var currentDraggingHour: Int? = null
     var editableAdapter: Adapter? = null
 
     constructor(context: Context): super(context)
@@ -44,35 +46,74 @@ class EditableDayView<T: DayView.ViewHolder>: DayView<T> {
             DragEvent.ACTION_DRAG_ENDED -> {
                 val i = dragging!!.pos
                 dragging = null
+                currentDraggingHour = null
                 layoutChild(i, adapter!!.getHourAt(i), adapter!!.getDurationAt(i))
                 invalidate()
             }
             DragEvent.ACTION_DRAG_LOCATION -> {
                 val newDraggingHour = (event.y / hourHeight).toInt()
-                if (dragging?.hour != newDraggingHour) {
-                    dragging?.hour = newDraggingHour
+                if (currentDraggingHour != newDraggingHour) {
+                    currentDraggingHour = newDraggingHour
                     val i = dragging!!.pos
-                    if (!dragging!!.move) {
-                        val hour = adapter!!.getHourAt(i)
-                        val duration = max(dragging!!.hour - hour, 1)
-                        layoutChild(i, hour, duration)
-                    } else {
+                    if (dragging!!.move) {
+                        setHour()
                         layoutChild(i, dragging!!.hour, adapter!!.getDurationAt(i))
+                    } else {
+                        setDuration()
+                        val hour = adapter!!.getHourAt(i)
+                        layoutChild(i, hour, dragging!!.hour - hour + 1)
                     }
                 }
             }
             DragEvent.ACTION_DROP -> {
                 if (dragging!!.move) {
+                    setHour()
                     editableAdapter!!.changeHourAt(dragging!!.pos, dragging!!.hour)
                 } else {
+                    setDuration()
                     val i = dragging!!.pos
-                    val duration = max(1, dragging!!.hour - adapter!!.getHourAt(i))
-                    Log.d("DayView", "Changing duration to $duration, hour: ${dragging!!.hour}")
-                    editableAdapter!!.changeDurationAt(i, duration)
+                    editableAdapter!!.changeDurationAt(i, dragging!!.hour - adapter!!.getHourAt(i) + 1)
                 }
             }
         }
         return true
+    }
+
+    private fun findSpan(hour: Int, skipPos: Int? = null): Pair<Int, Int>? {
+        var prevClosest = -1
+        var nextClosest = 24
+        for (i in 0 until adapter!!.getItemCount()) {
+            if (i == skipPos) continue
+
+            val otherHour = adapter!!.getHourAt(i)
+            val otherDuration = adapter!!.getDurationAt(i)
+            val otherEnd = otherHour + otherDuration - 1
+            if (hour in otherHour .. otherEnd) {
+                return null
+            }
+
+            if (otherEnd in (prevClosest + 1) until hour) {
+                prevClosest = otherEnd
+            }
+            if (otherHour in (hour + 1) until nextClosest) {
+                nextClosest = otherHour
+            }
+        }
+        return prevClosest to nextClosest
+    }
+    private fun setDuration() {
+        val currentHour = adapter!!.getHourAt(dragging!!.pos)
+        val (_, nextHour) = findSpan(currentHour, dragging!!.pos)!!
+
+        dragging!!.hour = min(max(currentDraggingHour!!, currentHour), nextHour - 1)
+    }
+
+    private fun setHour() {
+        val duration = adapter!!.getDurationAt(dragging!!.pos)
+        val span = findSpan(currentDraggingHour!!, dragging!!.pos) ?: return
+        if (currentDraggingHour!! > span.first && currentDraggingHour!! < span.second - duration + 1) {
+            dragging!!.hour = currentDraggingHour!!
+        }
     }
 
     override fun onDraw(canvas: Canvas?) {
