@@ -16,10 +16,10 @@ class OrgTask {
 
     fun getInternalPriority(): Long {
         if (deadline != null) {
-            return ChronoUnit.DAYS.between(Instant.now(), deadline) + 100
+            return ChronoUnit.DAYS.between(Instant.now(), deadline)
         }
         if (scheduled != null) {
-            return ChronoUnit.DAYS.between(Instant.now(), scheduled) + 100
+            return ChronoUnit.DAYS.between(Instant.now(), scheduled)
         }
         if (priority != null) {
             val prio = when (priority!!) {
@@ -27,7 +27,7 @@ class OrgTask {
                 in 'A'..'Z' -> priority!! - 'A'
                 else -> priority!!.code
             }
-            return prio.toLong()
+            return prio.toLong() + 100000
         }
         return Long.MAX_VALUE
     }
