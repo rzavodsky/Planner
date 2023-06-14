@@ -1,8 +1,10 @@
-package rzavodsky.planner
+package rzavodsky.planner.viewmodels
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import rzavodsky.planner.util.DateFormatter
+import rzavodsky.planner.R
 import rzavodsky.planner.orgmode.OrgTask
 
 class PlanAddModel: ViewModel() {
@@ -19,8 +21,14 @@ class TaskModel(val isTempTask: Boolean, index: Int?): ViewModel() {
         if (isTempTask) return ""
 
         if (orgTask!!.priority != null) return context.getString(R.string.priority, orgTask!!.priority)
-        if (orgTask!!.deadline != null) return context.getString(R.string.deadline, DateFormatter.formatInstant(orgTask!!.deadline))
-        if (orgTask!!.scheduled != null) return context.getString(R.string.scheduled, DateFormatter.formatInstant(orgTask!!.scheduled))
+        if (orgTask!!.deadline != null) return context.getString(
+            R.string.deadline,
+            DateFormatter.formatInstant(orgTask!!.deadline)
+        )
+        if (orgTask!!.scheduled != null) return context.getString(
+            R.string.scheduled,
+            DateFormatter.formatInstant(orgTask!!.scheduled)
+        )
         return ""
     }
 }

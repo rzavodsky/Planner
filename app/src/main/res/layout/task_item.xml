@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="rzavodsky.planner.TaskModel" />
+            type="rzavodsky.planner.viewmodels.TaskModel" />
         <import type="rzavodsky.planner.Tasks" />
     </data>
 

@@ -1,4 +1,4 @@
-package rzavodsky.planner
+package rzavodsky.planner.util
 
 import android.content.res.Resources
 import android.util.TypedValue

@@ -13,10 +13,10 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
-import rzavodsky.planner.PlanAddModel
+import rzavodsky.planner.viewmodels.PlanAddModel
 import rzavodsky.planner.Preferences
 import rzavodsky.planner.adapters.TaskAdapter
-import rzavodsky.planner.TaskModel
+import rzavodsky.planner.viewmodels.TaskModel
 import rzavodsky.planner.Tasks
 import rzavodsky.planner.database.PlanBlock
 import rzavodsky.planner.database.PlanBlockDatabase

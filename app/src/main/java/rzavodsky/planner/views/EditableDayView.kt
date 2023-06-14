@@ -15,7 +15,7 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import rzavodsky.planner.R
-import rzavodsky.planner.dpToPx
+import rzavodsky.planner.util.dpToPx
 import kotlin.math.max
 
 class EditableDayView<T: DayView.ViewHolder>: DayView<T> {

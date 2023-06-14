@@ -10,7 +10,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import rzavodsky.planner.R
-import rzavodsky.planner.dpToPx
+import rzavodsky.planner.util.dpToPx
 import kotlin.math.max
 
 

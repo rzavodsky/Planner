@@ -1,4 +1,4 @@
-package rzavodsky.planner
+package rzavodsky.planner.util
 
 import java.time.Instant
 import java.time.LocalDate

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
-import rzavodsky.planner.TaskModel
+import rzavodsky.planner.viewmodels.TaskModel
 import rzavodsky.planner.databinding.TaskItemBinding
 
 class TaskViewHolder(val binding: TaskItemBinding): RecyclerView.ViewHolder(binding.root)

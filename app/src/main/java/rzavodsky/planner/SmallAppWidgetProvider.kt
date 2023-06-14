@@ -7,7 +7,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.util.Log
 import android.widget.RemoteViews
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -23,10 +22,8 @@ class SmallAppWidgetProvider: AppWidgetProvider() {
         appWidgetManager: AppWidgetManager?,
         appWidgetIds: IntArray?
     ) {
-        Log.d("SmallWidgetProvider", "Update")
         val pendingResult = goAsync()
         CoroutineScope(SupervisorJob()).launch {
-            Log.d("SmallWidgetProvider", "Coroutine")
             val block = PlanBlockDatabase
                 .getInstance(context!!)
                 .planBlockDao
