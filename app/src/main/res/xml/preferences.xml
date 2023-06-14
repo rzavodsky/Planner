@@ -24,4 +24,13 @@
         app:nppc_unitText=":00"
         app:nppc_wrapSelectorWheel="false"
         />
+    <com.h6ah4i.android.preference.NumberPickerPreferenceCompat
+        app:key="notify_advance"
+        app:summary="How long in advance should you be notified"
+        app:title="Notification advance"
+        app:nppc_maxValue="30"
+        app:nppc_minValue="0"
+        app:nppc_unitText="minutes"
+        app:nppc_wrapSelectorWheel="false"
+        />
 </PreferenceScreen>

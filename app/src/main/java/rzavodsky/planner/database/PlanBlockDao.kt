@@ -27,4 +27,7 @@ interface PlanBlockDao {
 
     @Query("SELECT * FROM plan_blocks WHERE id = :id")
     suspend fun getPlan(id: Long): PlanBlock
+
+    @Query("SELECT * FROM plan_blocks WHERE date = :date AND hour + duration > :hour ORDER BY hour ASC LIMIT 1")
+    suspend fun getNextPlan(date: LocalDate, hour: Int): PlanBlock?
 }
