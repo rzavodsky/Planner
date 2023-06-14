@@ -19,29 +19,41 @@
     <View
         android:id="@+id/space"
         android:layout_width="0dp"
-        android:layout_height="10dp"
-        android:background="?attr/colorAccent"
+        android:layout_height="3dp"
+        android:background="?attr/surfaceColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backward_button" />
 
     <ImageButton
         android:id="@+id/backward_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:background="@android:color/transparent"
+        android:clickable="true"
         android:contentDescription="Backward"
-        android:src="@android:drawable/ic_media_rew"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:src="@drawable/baseline_arrow_back_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/text" />
 
     <ImageButton
         android:id="@+id/forward_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/transparent"
+        android:clickable="true"
         android:contentDescription="Forward"
-        android:src="@android:drawable/ic_media_ff"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:src="@drawable/baseline_arrow_forward_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/text" />
 
     <ScrollView
         android:layout_width="0dp"
@@ -55,11 +67,11 @@
             android:id="@+id/dayView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:hour_color="?android:attr/colorForeground"
+            app:hour_color="?android:attr/textColor"
             app:hour_height="50dp"
             app:hour_padding="20dp"
             app:hour_size="15dp"
-            app:separator_color="?attr/colorButtonNormal">
+            app:separator_color="?attr/surfaceColor">
 
         </rzavodsky.planner.views.DayView>
     </ScrollView>

@@ -5,24 +5,82 @@
     tools:context=".fragments.PlanDetailFragment">
 
     <data>
+
+        <import type="android.view.View" />
+
+        <import type="rzavodsky.planner.util.DateFormatter" />
+
         <variable
             name="planBlock"
             type="rzavodsky.planner.database.PlanBlock" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@{String.valueOf(planBlock.id)}"
-            tools:text="Plan Id" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="@{planBlock.displayName ?? @string/unknown_task}"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Plan Name" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="@+id/textView2"
+                app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{@string/deadline(DateFormatter.formatInstant(planBlock.orgTask.deadline))}'
+                    android:textSize="16sp"
+                    android:visibility="@{planBlock.orgTask.deadline == null ? View.GONE : View.VISIBLE}"
+                    tools:text="Deadline" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{@string/scheduled(DateFormatter.formatInstant(planBlock.orgTask.scheduled))}'
+                    android:textSize="16sp"
+                    android:visibility="@{planBlock.orgTask.scheduled == null ? View.GONE : View.VISIBLE}"
+                    tools:text="Scheduled" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{@string/priority(planBlock.orgTask.priority)}'
+                    android:textSize="16sp"
+                    android:visibility="@{planBlock.orgTask.priority == null ? View.GONE : View.VISIBLE}"
+                    tools:text="Scheduled" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@{planBlock.taskPlan ? planBlock.orgTask.description : @string/temp_task}"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="@+id/linearLayout"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                tools:text="Description" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

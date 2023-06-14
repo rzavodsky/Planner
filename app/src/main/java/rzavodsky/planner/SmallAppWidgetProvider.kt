@@ -6,7 +6,6 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.widget.RemoteViews
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -41,9 +40,6 @@ class SmallAppWidgetProvider: AppWidgetProvider() {
                 "${block.hour}:00 - ${block.hour + block.duration}:00"
             } ?: ""
 
-            // TODO: Better color
-            val color = block?.getBackgroundColor() ?: Color.BLUE
-
             val header = block?.let {
                 if (it.hour > LocalTime.now().hour) {
                     context.resources.getString(R.string.next_plan)
@@ -61,7 +57,6 @@ class SmallAppWidgetProvider: AppWidgetProvider() {
                     setTextViewText(R.id.taskNameText, name)
                     setTextViewText(R.id.timeText, time)
                     setTextViewText(R.id.header, header)
-                    setInt(R.id.container, "setBackgroundColor", color)
                     setOnClickPendingIntent(R.id.container, pendingIntent)
                 }
                 appWidgetManager?.updateAppWidget(appWidgetId, views)

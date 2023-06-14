@@ -9,12 +9,16 @@
             name="viewModel"
             type="rzavodsky.planner.viewmodels.TaskModel" />
         <import type="rzavodsky.planner.Tasks" />
+        <import type="rzavodsky.planner.R" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> viewModel.onClick.invoke()}" >
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:onClick="@{() -> viewModel.onClick.invoke()}">
 
         <TextView
             android:id="@+id/taskNameView"
@@ -35,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
-            app:imageDrawable="@{viewModel.index == null ? @drawable/circle : @drawable/circle_active}"
+            app:imageDrawable="@{viewModel.index == null ? @drawable/circle_dark : @drawable/circle_dark_active}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -46,6 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text='@{viewModel.index.toString()}'
+            android:textColor="?attr/planForeground"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="@+id/imageView"
             app:layout_constraintStart_toStartOf="@+id/imageView"

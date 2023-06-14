@@ -1,7 +1,28 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources>
     <style name="Base.Theme.Planner" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:textColor">@color/dark_text</item>
+        <item name="android:windowBackground">@color/dark_base</item>
+        <item name="colorPrimaryDark">@color/dark_mantle</item>
+        <item name="text">@color/dark_text</item>
+        <item name="toolbarColor">@color/dark_mantle</item>
+        <item name="buttonBackgroundColor">@color/dark_teal</item>
+        <item name="buttonForegroundColor">@color/dark_base</item>
+        <item name="surfaceColor">@color/dark_overlay0</item>
+
+        <item name="delete">@drawable/baseline_delete_24_dark</item>
+
+        <item name="plan0">@color/dark_rosewater</item>
+        <item name="plan1">@color/dark_peach</item>
+        <item name="plan2">@color/dark_yellow</item>
+        <item name="plan3">@color/dark_green</item>
+        <item name="plan4">@color/dark_sky</item>
+        <item name="plan5">@color/dark_sapphire</item>
+        <item name="plan6">@color/dark_lavender</item>
+        <item name="plan7">@color/dark_flamingo</item>
+        <item name="plan8">@color/dark_mauve</item>
+        <item name="plan9">@color/dark_maroon</item>
+        <item name="plan_temp">@color/dark_overlay0</item>
+        <item name="plan_done">@color/dark_base</item>
+        <item name="planForeground">@color/dark_base</item>
     </style>
 </resources>

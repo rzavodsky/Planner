@@ -125,7 +125,7 @@ class EditableDayView<T: DayView.ViewHolder>: DayView<T> {
             val top = hour * hourHeight
             val bottom = top + duration * hourHeight
 
-            drawable!!.setStroke(3.dpToPx.toInt(), editableAdapter!!.getColor(i))
+            drawable!!.setStroke(3.dpToPx.toInt(), editableAdapter!!.getColor(i, context))
             drawable!!.setBounds(sideSize.toInt(), top.toInt(), width, bottom.toInt())
             drawable!!.draw(canvas!!)
         }
@@ -138,7 +138,6 @@ class EditableDayView<T: DayView.ViewHolder>: DayView<T> {
         viewHolder.view.setOnTouchListener {v, event ->
             gd.onTouchEvent(event)
             v.performClick()
-            true
         }
         return viewHolder
     }
@@ -146,7 +145,7 @@ class EditableDayView<T: DayView.ViewHolder>: DayView<T> {
     interface Adapter {
         fun changeHourAt(pos: Int, hour: Int)
         fun changeDurationAt(pos: Int, duration: Int)
-        fun getColor(pos: Int): Int
+        fun getColor(pos: Int, context: Context): Int
     }
 
     private class Dragging(val pos: Int, var hour: Int, val move: Boolean)

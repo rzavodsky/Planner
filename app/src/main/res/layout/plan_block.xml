@@ -14,7 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/plan_block_background"
-        android:backgroundTint="@{planBlock.backgroundColor}">
+        android:backgroundTint="@{planBlock.getBackgroundColor(context)}"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
 
         <TextView
             android:id="@+id/task_name"
@@ -25,7 +28,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:text='@{planBlock.displayName ?? @string/unknown_task}'
-            android:textColor="@color/black"
+            android:textColor="?attr/planForeground"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

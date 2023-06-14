@@ -1,8 +1,29 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources>
     <style name="Base.Theme.Planner" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:textColor">@color/light_text</item>
+        <item name="android:windowBackground">@color/light_base</item>
+        <item name="colorPrimaryDark">@color/light_mantle</item>
+        <item name="text">@color/light_text</item>
+        <item name="toolbarColor">@color/light_mantle</item>
+        <item name="buttonBackgroundColor">@color/light_teal</item>
+        <item name="buttonForegroundColor">@color/light_base</item>
+        <item name="surfaceColor">@color/light_overlay0</item>
+
+        <item name="delete">@drawable/baseline_delete_24</item>
+
+        <item name="plan0">@color/light_rosewater</item>
+        <item name="plan1">@color/light_peach</item>
+        <item name="plan2">@color/light_yellow</item>
+        <item name="plan3">@color/light_green</item>
+        <item name="plan4">@color/light_sky</item>
+        <item name="plan5">@color/light_sapphire</item>
+        <item name="plan6">@color/light_lavender</item>
+        <item name="plan7">@color/light_flamingo</item>
+        <item name="plan8">@color/light_mauve</item>
+        <item name="plan9">@color/light_maroon</item>
+        <item name="plan_temp">@color/light_overlay0</item>
+        <item name="plan_done">@color/light_base</item>
+        <item name="planForeground">@color/light_base</item>
     </style>
 
     <style name="Theme.Planner" parent="Base.Theme.Planner" />

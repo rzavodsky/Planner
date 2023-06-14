@@ -2,4 +2,56 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="light_rosewater">#dc8a78</color>
+    <color name="light_flamingo">#dd7878</color>
+    <color name="light_pink">#ea76cb</color>
+    <color name="light_mauve">#8839ef</color>
+    <color name="light_red">#d20f39</color>
+    <color name="light_maroon">#e64553</color>
+    <color name="light_peach">#fe640b</color>
+    <color name="light_yellow">#df8e1d</color>
+    <color name="light_green">#40a02b</color>
+    <color name="light_teal">#179299</color>
+    <color name="light_sky">#04a5e5</color>
+    <color name="light_sapphire">#209fb5</color>
+    <color name="light_blue">#1e66f5</color>
+    <color name="light_lavender">#7287fd</color>
+    <color name="light_text">#4c4f69</color>
+    <color name="light_overlay2">#7c7f93</color>
+    <color name="light_overlay1">#8c8fa1</color>
+    <color name="light_overlay0">#9ca0b0</color>
+    <color name="light_surface2">#acb0be</color>
+    <color name="light_surface1">#bcc0cc</color>
+    <color name="light_surface0">#ccd0da</color>
+    <color name="light_base">#eff1f5</color>
+    <color name="light_mantle">#e6e9ef</color>
+    <color name="light_crust">#dce0e8</color>
+
+    <color name="dark_rosewater">#f4dbd6</color>
+    <color name="dark_flamingo">#f0c6c6</color>
+    <color name="dark_pink">#f5bde6</color>
+    <color name="dark_mauve">#c6a0f6</color>
+    <color name="dark_red">#ed8796</color>
+    <color name="dark_maroon">#ee99a0</color>
+    <color name="dark_peach">#f5a97f</color>
+    <color name="dark_yellow">#eed49f</color>
+    <color name="dark_green">#a6da95</color>
+    <color name="dark_teal">#8bd5ca</color>
+    <color name="dark_sky">#91d7e3</color>
+    <color name="dark_sapphire">#7dc4e4</color>
+    <color name="dark_blue">#8aadf4</color>
+    <color name="dark_lavender">#b7bdf8</color>
+    <color name="dark_text">#cad3f5</color>
+    <color name="dark_overlay2">#939ab7</color>
+    <color name="dark_overlay1">#8087a2</color>
+    <color name="dark_overlay0">#6e738d</color>
+    <color name="dark_surface2">#5b6078</color>
+    <color name="dark_surface1">#494d64</color>
+    <color name="dark_surface0">#363a4f</color>
+    <color name="dark_base">#24273a</color>
+    <color name="dark_mantle">#1e2030</color>
+    <color name="dark_crust">#181926</color>
+
+
 </resources>
