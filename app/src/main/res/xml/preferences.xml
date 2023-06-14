@@ -21,7 +21,7 @@
         app:title="Default duration"
         app:nppc_maxValue="24"
         app:nppc_minValue="1"
-        app:nppc_unitText=":00"
+        app:nppc_unitText="hours"
         app:nppc_wrapSelectorWheel="false"
         />
     <com.h6ah4i.android.preference.NumberPickerPreferenceCompat
