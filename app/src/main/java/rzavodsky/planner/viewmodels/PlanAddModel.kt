@@ -7,16 +7,26 @@ import rzavodsky.planner.util.DateFormatter
 import rzavodsky.planner.R
 import rzavodsky.planner.orgmode.OrgTask
 
+/**
+ * ViewModel, which stores information for the PlanAddFragment
+ */
 class PlanAddModel: ViewModel() {
     var selectedTasks = mutableListOf<TaskModel>()
 }
 
+/**
+ * ViewModel, which stores information for a task_item
+ */
 class TaskModel(val isTempTask: Boolean, index: Int?): ViewModel() {
     val index = MutableLiveData<Int>(index)
     var orgTask: OrgTask? = null
     var name: String? = null
     var onClick: (() -> Unit)? = null
 
+    /**
+     * Returns a summary, which is displayed under the name of the task
+     * Summary shows information about the sorting criterion of this task
+     */
     fun getSummary(context: Context): String {
         if (isTempTask) return ""
 

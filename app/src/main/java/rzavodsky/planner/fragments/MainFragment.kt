@@ -15,6 +15,9 @@ import rzavodsky.planner.database.PlanBlockDatabase
 import rzavodsky.planner.databinding.FragmentMainBinding
 import java.time.LocalDate
 
+/**
+ * Main fragment of the application. Shows a list of plans for today in an EditableDayView.
+ */
 class MainFragment : Fragment() {
 
     override fun onCreateView(
@@ -25,7 +28,7 @@ class MainFragment : Fragment() {
 
         val dataSource = PlanBlockDatabase.getInstance(requireContext()).planBlockDao
 
-        val adapter = EditablePlanBlockAdapter()
+        val adapter = EditablePlanBlockAdapter(requireContext())
         adapter.onBlockUpdate = {
             lifecycleScope.launch {
                 dataSource.update(it)

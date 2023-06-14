@@ -6,6 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
+/**
+ * Database, which stores PlanBlocks
+ */
 @Database(entities = [PlanBlock::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class PlanBlockDatabase: RoomDatabase() {
@@ -15,6 +18,9 @@ abstract class PlanBlockDatabase: RoomDatabase() {
         @Volatile
         private var INSTANCE: PlanBlockDatabase? = null
 
+        /**
+         * Returns the instance of this database singleton
+         */
         fun getInstance(context: Context): PlanBlockDatabase {
             synchronized(this) {
                 if (INSTANCE == null) {

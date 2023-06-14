@@ -17,6 +17,9 @@ import java.time.LocalDate
 
 const val STATE_DATE = "date"
 
+/**
+ * Fragment, which shows the history of all plans
+ */
 class PlanHistoryFragment : Fragment() {
     private lateinit var binding: FragmentPlanHistoryBinding
     private var date = LocalDate.now().minusDays(1)

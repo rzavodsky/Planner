@@ -14,6 +14,9 @@ import rzavodsky.planner.database.PlanBlockDatabase
 import java.time.LocalDate
 import java.time.LocalTime
 
+/**
+ * Widget, which shows the current or next plan block.
+ */
 class SmallAppWidgetProvider: AppWidgetProvider() {
 
     override fun onUpdate(
@@ -66,6 +69,9 @@ class SmallAppWidgetProvider: AppWidgetProvider() {
     }
 
     companion object {
+        /**
+         * Sends a broadcast to manually update all widgets of this kind
+         */
         fun updateWidgets(context: Context) {
             val widgetIntent = Intent(context, SmallAppWidgetProvider::class.java).apply {
                 action = AppWidgetManager.ACTION_APPWIDGET_UPDATE

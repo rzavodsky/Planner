@@ -24,6 +24,9 @@ import rzavodsky.planner.databinding.FragmentPlanAddBinding
 import rzavodsky.planner.databinding.TaskItemBinding
 import java.time.LocalDate
 
+/**
+ * Fragment, which allows user to add plans for today
+ */
 class PlanAddFragment : Fragment() {
     private lateinit var binding: FragmentPlanAddBinding
     private lateinit var viewModel: PlanAddModel

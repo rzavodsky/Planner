@@ -14,6 +14,10 @@ import rzavodsky.planner.util.dpToPx
 import kotlin.math.max
 
 
+/**
+ * View, which shows a list of items according to their starting hour and duration
+ * This view requires an adapter, which can provide information about the displayed data
+ */
 open class DayView<T: DayView.ViewHolder>: ViewGroup {
     protected var hourHeight = 75.dpToPx
     private var hourPadding = 5.dpToPx
@@ -34,6 +38,10 @@ open class DayView<T: DayView.ViewHolder>: ViewGroup {
 
 
     private val viewHolders = mutableListOf<T>()
+
+    /**
+     * Adapter, which will be used to provide information to this DayView
+     */
     open var adapter: Adapter<T>? = null
         set(value) {
             field = value
@@ -139,16 +147,46 @@ open class DayView<T: DayView.ViewHolder>: ViewGroup {
         setMeasuredDimension(widthMeasureSpec, (hourHeight * 24).toInt())
     }
 
+    /**
+     * Stores the view, which will be displayed in a DayView
+     */
     open class ViewHolder(val view: View)
 
+    /**
+     * Adapter, which provides information about data to a DayView
+     */
     abstract class Adapter<T: ViewHolder> {
         var changeNotifier: (() -> Unit)? = null
+
+        /**
+         * Returns the amount of items to display in a DayView
+         */
         abstract fun getItemCount(): Int
+        /**
+         * Returns the starting hour for the item at position pos
+         */
         abstract fun getHourAt(pos: Int): Int
+        /**
+         * Returns the duration for the item at position pos
+         */
         abstract fun getDurationAt(pos: Int): Int
+        /**
+         * Binds a ViewHolder to the item at position pos
+         */
         abstract fun bindViewHolder(pos: Int, view: T)
+        /**
+         * Creates a new ViewHolder
+         */
         abstract fun createViewHolder(parent: ViewGroup): T
+
+        /**
+         * Called, when the view associated with item at pos is clicked
+         */
         abstract fun onClick(pos: Int)
+
+        /**
+         * Notifies the DayView of changes in the dataset
+         */
         fun notifyDatasetChanged() {
             changeNotifier?.invoke()
         }

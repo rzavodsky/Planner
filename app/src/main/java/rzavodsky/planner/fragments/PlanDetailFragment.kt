@@ -20,6 +20,9 @@ import rzavodsky.planner.database.PlanBlockDatabase
 import rzavodsky.planner.databinding.FragmentPlanDetailBinding
 import java.time.LocalDate
 
+/**
+ * Fragment, which shows a detailed view for a certain plan
+ */
 class PlanDetailFragment : Fragment(), MenuProvider {
     private val args: PlanDetailFragmentArgs by navArgs()
     private lateinit var binding: FragmentPlanDetailBinding

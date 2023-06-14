@@ -14,6 +14,12 @@ import kotlinx.coroutines.launch
 import rzavodsky.planner.database.PlanBlockDatabase
 import java.time.LocalDate
 
+/**
+ * BroadcastReceiver, which sends a notification for the beginning of a plan.
+ * When a broadcast is received, it queries the database for a plan at the specified hour.
+ * If such plan exists, it sends a notification.
+ * The hour of the plan should be sent in the "hour" extra of the intent.
+ */
 class NotificationBroadcastReceiver: BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {

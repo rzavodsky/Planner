@@ -7,6 +7,11 @@ import java.io.InputStreamReader
 import java.time.LocalDateTime
 import java.time.ZoneId
 
+/**
+ * Parser for the Org file format
+ * Only parses to do items, which have an id associated with them
+ * Parses the heading, deadline, scheduled, priority, and everything else is stored in the description
+ */
 class OrgParser(stream: InputStream) {
     private val taskRegex = Regex("""^\*+ +TODO +(?:\[#([A-Z0-9])] +)?(.*?)(?: +:([a-zA-Z0-9_@#%]+:)+)?$""")
     private val headingRegex = Regex("""^\*+ """)
@@ -15,6 +20,10 @@ class OrgParser(stream: InputStream) {
     private val reader = BufferedReader(InputStreamReader(stream))
     private var currentLine: String? = null
 
+    /**
+     * Parses the file from the stream
+     * @return List of OrgTasks, or an empty list if parsing failed
+     */
     fun parse(): List<OrgTask> {
         val tasks = mutableListOf<OrgTask>()
         currentLine = reader.readLine()

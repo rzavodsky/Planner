@@ -26,6 +26,11 @@ import java.time.LocalTime
 import java.time.ZoneId
 
 const val NOTIFICATION_CHANNEL_ID = "channel_main"
+
+/**
+ * Main activity of this application. Handles navigation and switching between fragments.
+ * This activity is also responsible for creation of Alarms
+ */
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 

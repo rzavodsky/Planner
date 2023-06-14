@@ -9,8 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import rzavodsky.planner.viewmodels.TaskModel
 import rzavodsky.planner.databinding.TaskItemBinding
 
+/**
+ * Holder for the task_view layout, along with its DataBinding
+ */
 class TaskViewHolder(val binding: TaskItemBinding): RecyclerView.ViewHolder(binding.root)
 
+/**
+ * Adapter, which provides a list of TaskModels to a RecyclerView
+ */
 class TaskAdapter(private val lifecycleOwner: LifecycleOwner): RecyclerView.Adapter<TaskViewHolder>() {
     var data = listOf<TaskModel>()
         @SuppressLint("NotifyDataSetChanged")

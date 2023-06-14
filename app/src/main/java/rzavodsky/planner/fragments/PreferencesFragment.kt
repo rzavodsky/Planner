@@ -15,6 +15,10 @@ import rzavodsky.planner.R
 import rzavodsky.planner.Tasks
 
 const val DIALOG_FRAGMENT_TAG = "androidx.preference.PreferenceFragment.DIALOG"
+
+/**
+ * Fragment, which allows user to set preferences
+ */
 class PreferencesFragment: PreferenceFragmentCompat() {
         private val orgFileIntentLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -65,6 +69,7 @@ class PreferencesFragment: PreferenceFragmentCompat() {
 
         if (preference is NumberPickerPreferenceCompat) {
             val f = NumberPickerPreferenceDialogFragmentCompat.newInstance(preference.key)
+            @Suppress("DEPRECATION")
             f.setTargetFragment(this, 0)
             f.show(parentFragmentManager, DIALOG_FRAGMENT_TAG)
         } else {

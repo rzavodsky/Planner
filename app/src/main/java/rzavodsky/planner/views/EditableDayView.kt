@@ -19,11 +19,21 @@ import rzavodsky.planner.util.dpToPx
 import kotlin.math.max
 import kotlin.math.min
 
+/**
+ * View, which shows a list of items according to their starting hour and duration, and
+ * allows the user to edit the starting hour and duration of each item.
+ * This view requires both an adapter similar to the DayView, and an editableAdapter,
+ * which the EditableDayView can use to update certain items.
+ */
 class EditableDayView<T: DayView.ViewHolder>: DayView<T> {
     private var drawable: GradientDrawable? = null
 
     private var dragging: Dragging? = null
     private var currentDraggingHour: Int? = null
+
+    /**
+     * Adapter, which will be used to update items from the dataset
+     */
     var editableAdapter: Adapter? = null
 
     constructor(context: Context): super(context)
@@ -125,7 +135,7 @@ class EditableDayView<T: DayView.ViewHolder>: DayView<T> {
             val top = hour * hourHeight
             val bottom = top + duration * hourHeight
 
-            drawable!!.setStroke(3.dpToPx.toInt(), editableAdapter!!.getColor(i, context))
+            drawable!!.setStroke(3.dpToPx.toInt(), editableAdapter!!.getColor(i))
             drawable!!.setBounds(sideSize.toInt(), top.toInt(), width, bottom.toInt())
             drawable!!.draw(canvas!!)
         }
@@ -142,10 +152,22 @@ class EditableDayView<T: DayView.ViewHolder>: DayView<T> {
         return viewHolder
     }
 
+    /**
+     * Adapter, which allows the EditableDayView to edit its dataset
+     */
     interface Adapter {
+        /**
+         * Changes the starting hour of item at position pos to hour
+         */
         fun changeHourAt(pos: Int, hour: Int)
+        /**
+         * Changes the duration of item at position pos to duration
+         */
         fun changeDurationAt(pos: Int, duration: Int)
-        fun getColor(pos: Int, context: Context): Int
+        /**
+         * Returns the background color of a certain item
+         */
+        fun getColor(pos: Int): Int
     }
 
     private class Dragging(val pos: Int, var hour: Int, val move: Boolean)

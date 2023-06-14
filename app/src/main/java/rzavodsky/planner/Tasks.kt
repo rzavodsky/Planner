@@ -15,6 +15,10 @@ import rzavodsky.planner.orgmode.OrgTask
 import java.io.File
 import java.io.FileNotFoundException
 
+/**
+ * Watches a certain file for changes. If a change is detected, notifies the provided tasks instance.
+ */
+@Suppress("DEPRECATION")
 class OrgFileObserver(val tasks: Tasks, path: String, val context: Context): FileObserver(path, MODIFY) {
     override fun onEvent(event: Int, path: String?) {
         Log.i("OrgFileObserver", "File modified")
@@ -22,6 +26,9 @@ class OrgFileObserver(val tasks: Tasks, path: String, val context: Context): Fil
     }
 }
 
+/**
+ * Singleton, which stores information about the tasks in an Org file.
+ */
 class Tasks(looper: Looper?) {
     private var taskMap = MutableLiveData(HashMap<String, OrgTask>())
     private var handler = if (looper != null) Handler(looper) else null
@@ -29,9 +36,16 @@ class Tasks(looper: Looper?) {
     private var observedPath: String? = null
     private var updateScheduled = false
 
+    /**
+     * A LiveData of a hashmap which maps the org task ids to their tasks
+     */
     val tasks: LiveData<HashMap<String, OrgTask>>
         get() = taskMap
 
+    /**
+     * Update tasks by reading the org file.
+     * This method can be called from any thread.
+     */
     fun update(context: Context) {
         if (Looper.myLooper() == handler?.looper) {
             doUpdate(context)
@@ -71,6 +85,10 @@ class Tasks(looper: Looper?) {
         observer!!.startWatching()
     }
 
+    /**
+     * Stops the file observer.
+     * This method should be called when deleting a Tasks object
+     */
     fun removeObserver() {
         observer?.stopWatching()
         observer = null
@@ -100,12 +118,18 @@ class Tasks(looper: Looper?) {
         }
     }
 
+    /**
+     * Returns the task associated with the given id, or null if not found
+     */
     fun getTask(id: String): OrgTask? = taskMap.value!![id]
 
     companion object {
         @Volatile
         private var INSTANCE: Tasks? = null
 
+        /**
+         * Returns an instance of the Tasks singleton
+         */
         @JvmStatic
         fun getInstance(): Tasks {
             if (INSTANCE == null) {
@@ -113,9 +137,17 @@ class Tasks(looper: Looper?) {
             }
             return INSTANCE!!
         }
+
+        /**
+         * Returns true, if the Tasks singleton has already been created
+         */
         fun hasInstance(): Boolean {
             return INSTANCE != null
         }
+
+        /**
+         * Returns a hashmap of parsed tasks, doesn't create the singleton
+         */
         fun singleParse(context: Context): HashMap<String, OrgTask> {
             val tasks = Tasks(null)
             val path = PreferenceManager.getDefaultSharedPreferences(context)
@@ -123,6 +155,11 @@ class Tasks(looper: Looper?) {
             val uri = Uri.parse(path)
             return tasks.reparseFile(context, uri) ?: HashMap()
         }
+
+        /**
+         * Stops the file observer and removes the singleton instance.
+         * This method should be called when an app is closing.
+         */
         fun teardown() {
             INSTANCE?.removeObserver()
             INSTANCE = null

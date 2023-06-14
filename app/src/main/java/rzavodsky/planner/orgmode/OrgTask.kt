@@ -3,6 +3,10 @@ package rzavodsky.planner.orgmode
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
+/**
+ * Stores a single task from an org file
+ * Every task needs to have an id
+ */
 class OrgTask {
     var _id: String? = null
     val id: String
@@ -14,6 +18,11 @@ class OrgTask {
     var scheduled: Instant? = null
     var description: String? = null
 
+    /**
+     * Returns the sorting priority for this task
+     * Tasks are sorted according to the number of days until the deadline or schedule, then according to the priority
+     * Tasks without a deadline, schedule or a priority are sorted last
+     */
     fun getInternalPriority(): Long {
         if (deadline != null) {
             return ChronoUnit.DAYS.between(Instant.now(), deadline)
