@@ -22,9 +22,9 @@ class OrgFileObserver(val tasks: Tasks, path: String, val context: Context): Fil
     }
 }
 
-class Tasks(looper: Looper) {
+class Tasks(looper: Looper?) {
     private var taskMap = MutableLiveData(HashMap<String, OrgTask>())
-    private var handler = Handler(looper)
+    private var handler = if (looper != null) Handler(looper) else null
     private var observer: FileObserver? = null
     private var observedPath: String? = null
     private var updateScheduled = false
@@ -33,12 +33,12 @@ class Tasks(looper: Looper) {
         get() = taskMap
 
     fun update(context: Context) {
-        if (Looper.myLooper() == handler.looper) {
+        if (Looper.myLooper() == handler?.looper) {
             doUpdate(context)
         } else {
             if (updateScheduled) return
             updateScheduled = true
-            handler.postDelayed({
+            handler?.postDelayed({
                 updateScheduled = false
                 doUpdate(context)
             }, 1000)
@@ -55,12 +55,14 @@ class Tasks(looper: Looper) {
         }
 
         val uri = Uri.parse(path)
-        if (observedPath != path) {
+        if (observedPath != path && handler != null) {
             observer?.stopWatching()
             setupObserver(context, uri)
         }
 
-        reparseFile(context, uri)
+        reparseFile(context, uri)?.let {
+            taskMap.value = it
+        }
     }
 
     private fun setupObserver(context: Context, uri: Uri) {
@@ -75,27 +77,26 @@ class Tasks(looper: Looper) {
     }
 
 
-    private fun reparseFile(context: Context, uri: Uri) {
+    private fun reparseFile(context: Context, uri: Uri): HashMap<String, OrgTask>? {
         val map = HashMap<String, OrgTask>()
         try {
             context.contentResolver.openInputStream(uri).use {
                 if (it == null) {
-                    taskMap.value = HashMap()
-                    return
+                    return HashMap()
                 }
                 val parsedTasks = OrgParser(it).parse()
                 for (task in parsedTasks) {
                     map[task.id] = task
                 }
             }
-            taskMap.value = map
+            return map
         } catch (e: FileNotFoundException) {
-            return
+            return null
         } catch (e: SecurityException) { // No longer have permission
-            taskMap.value = HashMap()
             val prefs = PreferenceManager.getDefaultSharedPreferences(context).edit()
             prefs.remove(Preferences.orgFile)
             prefs.apply()
+            return HashMap()
         }
     }
 
@@ -111,6 +112,16 @@ class Tasks(looper: Looper) {
                 INSTANCE = Tasks(Looper.myLooper()!!)
             }
             return INSTANCE!!
+        }
+        fun hasInstance(): Boolean {
+            return INSTANCE != null
+        }
+        fun singleParse(context: Context): HashMap<String, OrgTask> {
+            val tasks = Tasks(null)
+            val path = PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(Preferences.orgFile, null) ?: return HashMap()
+            val uri = Uri.parse(path)
+            return tasks.reparseFile(context, uri) ?: HashMap()
         }
         fun teardown() {
             INSTANCE?.removeObserver()

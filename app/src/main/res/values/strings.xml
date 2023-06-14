@@ -9,4 +9,10 @@
     <string name="temp_tasks">Temporary Tasks</string>
     <string name="org_tasks">Org Tasks</string>
     <string name="add">Add</string>
+    <string name="next_plan">Next task</string>
+    <string name="current_plan">Current task</string>
+    <string name="no_tasks">All done</string>
+    <string name="deadline">Deadline: %1$s</string>
+    <string name="scheduled">Scheduled: %1$s</string>
+    <string name="priority">Priority: %1$s</string>
 </resources>
