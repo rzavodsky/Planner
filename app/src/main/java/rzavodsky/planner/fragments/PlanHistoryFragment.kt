@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
+import rzavodsky.planner.DateFormatter
 import rzavodsky.planner.adapters.PlanBlockAdapter
 import rzavodsky.planner.database.PlanBlock
 import rzavodsky.planner.database.PlanBlockDao
@@ -65,7 +66,7 @@ class PlanHistoryFragment : Fragment() {
         if (date >= LocalDate.now()) {
             date = LocalDate.now().minusDays(1)
         }
-        binding.date.text = date.toString()
+        binding.date.text = DateFormatter.formatDate(date)
         data?.removeObservers(viewLifecycleOwner)
         data = db.getAllPlansForDay(date)
         data?.observe(viewLifecycleOwner) {
