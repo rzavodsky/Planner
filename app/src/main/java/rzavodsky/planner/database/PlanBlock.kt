@@ -4,6 +4,8 @@ import android.graphics.Color
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import rzavodsky.planner.Tasks
+import rzavodsky.planner.orgmode.OrgTask
 import java.time.LocalDate
 import kotlin.random.Random
 
@@ -26,4 +28,12 @@ data class PlanBlock(
         val rand = Random(seed)
         return Color.HSVToColor(floatArrayOf(rand.nextFloat() * 360, 0.6f, 1f))
     }
+
+    val displayName: String?
+        get() = if (isTaskPlan) {
+            Tasks.getInstance().getTask(taskId!!)?.title
+        } else title!!
+
+    val orgTask: OrgTask?
+        get() = if (isTaskPlan) Tasks.getInstance().getTask(taskId!!) else null
 }

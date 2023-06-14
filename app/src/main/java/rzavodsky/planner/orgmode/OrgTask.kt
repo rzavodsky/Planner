@@ -14,7 +14,7 @@ class OrgTask {
     var scheduled: Instant? = null
     var description: String? = null
 
-    fun getPriority(): Long {
+    fun getInternalPriority(): Long {
         if (deadline != null) {
             return ChronoUnit.DAYS.between(Instant.now(), deadline) + 100
         }

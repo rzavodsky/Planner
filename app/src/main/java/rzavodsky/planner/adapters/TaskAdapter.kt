@@ -15,7 +15,7 @@ class TaskAdapter(private val lifecycleOwner: LifecycleOwner): RecyclerView.Adap
     var data = listOf<TaskModel>()
         @SuppressLint("NotifyDataSetChanged")
         set(value) {
-            field = value.sortedBy { it.orgTask?.getPriority() ?: Long.MAX_VALUE }
+            field = value.sortedBy { it.orgTask?.getInternalPriority() ?: Long.MAX_VALUE }
             notifyDataSetChanged()
         }
 
