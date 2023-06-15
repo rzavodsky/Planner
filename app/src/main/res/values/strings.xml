@@ -15,4 +15,5 @@
     <string name="deadline">Deadline: %1$s</string>
     <string name="scheduled">Scheduled: %1$s</string>
     <string name="priority">Priority: %1$s</string>
+    <string name="no_space">Not enough space for new plans</string>
 </resources>

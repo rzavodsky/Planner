@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
 import rzavodsky.planner.viewmodels.PlanAddModel
 import rzavodsky.planner.Preferences
+import rzavodsky.planner.R
 import rzavodsky.planner.adapters.TaskAdapter
 import rzavodsky.planner.viewmodels.TaskModel
 import rzavodsky.planner.Tasks
@@ -118,6 +120,11 @@ class PlanAddFragment : Fragment() {
             val dao = PlanBlockDatabase.getInstance(requireContext()).planBlockDao
             for (task in viewModel.selectedTasks) {
                 val nextStart = dao.getLastBlockForDay(LocalDate.now())?.let { it.hour + it.duration } ?: startHour
+                if (nextStart + duration > 24) {
+                    val text = resources.getString(R.string.no_space)
+                    Toast.makeText(requireContext(), text, Toast.LENGTH_LONG).show()
+                    break
+                }
                 dao.insert(PlanBlock(nextStart, duration, LocalDate.now(),
                     !task.isTempTask, task.orgTask?.id, task.name))
             }
